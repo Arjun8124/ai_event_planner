@@ -48,6 +48,11 @@ class ResponseParam(BaseModel):
         orm_mode = True
 
 
+@app.get("/", status_code=status.HTTP_200_OK)
+async def root():
+    return {"message": "Api is running"}
+
+
 @app.get("/history", response_model=list[ResponseParam], status_code=status.HTTP_200_OK)
 async def history(db: db_dependency):
     return db.query(Request).order_by(Request.created_at.desc()).all()
